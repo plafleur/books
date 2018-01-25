@@ -1,28 +1,65 @@
 (ns books.core
     (:require [books.db :refer [db-string]]
               [clojure.java.jdbc :as sql]
-              [buddy.hashers :as hashers]))
+              [compojure.core :refer [defroutes GET POST]]
+              [compojure.handler :as handler]
+              [compojure.route :as route]
+              [ring.adapter.jetty :as ring]
+              [hiccup.page :as page]
+              [hiccup.form :as form]
+              [cemerick.friend :as friend]
+              (cemerick.friend [workflows :as workflows]
+                               [credentials :as creds])))
 
-(defn get-password [email]
-  (-> (sql/query db-string
-            ["select password from users where email = (?)" email]) first :password))
+(defn get-user-info [req]
+    (let [user-info (first (sql/query db-string 
+                 ["select username, password, roles from users where username = (?)" req]))]
+            (cond
+            (= (:roles user-info) "user") (assoc user-info :roles #{::user})
+            (= (:roles user-info) "admin") (assoc user-info :roles #{::admin})
+            )
+        )
+        )
+
 
 (defn create-user! [email password]
    (sql/insert! db-string :users
-                 {:email email 
-                  :password (hashers/derive password)}))
+                 {:username email 
+                  :password (creds/hash-bcrypt password)}))
                 
-(defn log-in [email password]
-  (if (hashers/check password (get-password email))
-      "success"
-      "fail"))
-                
-(defn check-users []
-  (sql/query db-string
-             ["select * from users"]))
+;(defn authenticated? [email password]
+ ; (creds/bcrypt-credential-fn (get-user-info email) {:username email :password password}))
+
+(defn home []
+  (page/html5
+    [:head 
+     [:title "Books"]]
+   [:body
+    [:h1 "Books"]
+    (form/form-to
+      [:post "/login"]
+    (form/email-field "email")
+    (form/password-field "password")
+    (form/submit-button {:class "btn" :name "submit"} "Submit")
+    )]))
 
 
-(defn -main
-  "I don't do a whole lot ... yet."
-  [& args]
-  (println "Hello, World!"))
+(defroutes app-routes
+  (GET "/authorized" request
+       (friend/authorize #{::admin} "This page can only be seen by authenticated users."))
+    (GET "/login" [] (-> "login.html"
+                       (ring.util.response/file-response {:root "resources"})
+                       (ring.util.response/content-type "text/html")))
+  (route/not-found "Not Found"))
+
+
+(def app
+  (handler/site
+   (friend/authenticate app-routes
+                        {:default-landing-uri "/authorized"
+                         :credential-fn (partial creds/bcrypt-credential-fn get-user-info) 
+                         :workflows [(workflows/interactive-form)]
+                        })))
+
+(defn -main []
+  (ring/run-jetty #'app {:port 8080 :join? false}))
