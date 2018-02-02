@@ -33,22 +33,30 @@
 (defn home []
   (page/html5
     [:head 
-     [:title "Books"]]
+     [:title "Books"]
+     (page/include-css "style.css")]
    [:body
-    [:h1 "Books"]
+    [:h1.title "Books"]
+    [:div.login-form
     (form/form-to
       [:post "/login"]
+    (form/label {:class "login-form-username"} "username" "Username:")
     (form/text-field "username")
+    [:br]
+    (form/label {:class "login-form-password"} "username" "Password:")
     (form/password-field "password")
-    (form/submit-button {:class "btn" :name "submit"} "Submit")
-    )]))
+    [:br][:br]
+    (form/submit-button {:class "btn" :name "submit"} "Submit"))]]
+    ))
 
 
 (defroutes app-routes
   (GET "/authorized" request
        (friend/authorize #{::user} "This page can only be seen by authenticated users."))
     (GET "/login" [] (home))
-  (route/not-found "Not Found"))
+  (route/resources "/")
+  (route/not-found "Not Found")
+   )
 
 
 (def app
