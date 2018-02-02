@@ -38,7 +38,7 @@
     [:h1 "Books"]
     (form/form-to
       [:post "/login"]
-    (form/email-field "email")
+    (form/text-field "username")
     (form/password-field "password")
     (form/submit-button {:class "btn" :name "submit"} "Submit")
     )]))
@@ -46,10 +46,8 @@
 
 (defroutes app-routes
   (GET "/authorized" request
-       (friend/authorize #{::admin} "This page can only be seen by authenticated users."))
-    (GET "/login" [] (-> "login.html"
-                       (ring.util.response/file-response {:root "resources"})
-                       (ring.util.response/content-type "text/html")))
+       (friend/authorize #{::user} "This page can only be seen by authenticated users."))
+    (GET "/login" [] (home))
   (route/not-found "Not Found"))
 
 
