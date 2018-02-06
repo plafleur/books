@@ -1,14 +1,56 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/css?family=Nanum+Pen+Script');
 html,
 body {
    margin:0;
-   padding:5px;
+   padding:0px;
    height:100%;
+}
+
+#header {
+   background: #1e74ff;
+   padding:10px;
+}
+.topnav {
+    background-color: #1e74ff;
+    overflow: hidden;
+    border-style: solid;
+    margin: 5px;
 }
 .title {
     font-family: 'Lato', sans-serif;
     color: #000000;
     font-size: 30pt;
+    float:left;
+}
+
+a.text {
+    color: #ffffff;
+    font-family: 'Nanum Pen Script', cursive;
+    float: left;
+    text-align: center;
+    padding: 0px 10px;
+    font-weight: bold;
+    font-size: 60px;
+    text-decoration: none;
+}
+
+a.signup{
+    font-family: 'Lato', sans-serif;
+    color: #ffffff;
+    font-size: 17pt;
+    float: right;
+    text-decoration: none;
+    padding: 25px 16px;
+}
+
+a.logout{
+    font-family: 'Lato', sans-serif;
+    color: #ffffff;
+    font-size: 17pt;
+    float: right;
+    text-decoration: none;
+    padding: 25px 16px;
 }
 
 .login-form-username {
@@ -23,4 +65,8 @@ body {
     color: #000000;
     font-size: 15pt;
     padding-right: 10px;
+}
+
+form {
+    padding: 10px;
 }
