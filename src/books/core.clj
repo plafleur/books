@@ -6,6 +6,7 @@
               [compojure.handler :as handler]
               [compojure.route :as route]
               [ring.adapter.jetty :as ring]
+              [ring.util.response :as response]
               [cemerick.friend :as friend]
               (cemerick.friend [workflows :as workflows]
                                [credentials :as creds])))
@@ -15,10 +16,14 @@
   (GET "/bookshelf" request
        (friend/authorize #{::user} (views/bookshelf)))
     (GET "/login" [] (views/home))
+    (GET "/login-signup" [] (views/home "User Created"))
     (GET "/signup" [] (views/signup))
+    (GET "/signup-user-error" [] (views/signup "User already exists, please log in!"))
+    (GET "/signup-password-match" [] (views/signup "Passwords don't match, try again!"))
+    (GET "/signup-password-length" [] (views/signup "Password is too short, must be 10 characters!"))
     (POST "/signup-complete" [username password password-reenter] (helpers/signup-check username password password-reenter)) 
   (route/resources "/")
-  (friend/logout (ANY "/logout" request (ring.util.response/redirect "/login")))
+  (friend/logout (ANY "/logout" request (response/redirect "/login")))
   (route/not-found "Not Found")
    )
 
