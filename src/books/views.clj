@@ -14,13 +14,14 @@
     [:a.logout {:href "/logout"} "Logout"]])
 )
 
-(defn home []
+(defn home [& message]
   (page/html5
     [:head 
      [:title "Books"]
      (page/include-css "style.css")]
     header-login
     [:body
+    [:div message]
     [:div.login-form
     (form/form-to
       [:post "/login"]
@@ -42,13 +43,14 @@
      "List of books"]
     ))
 
-(defn signup []
+(defn signup [& message]
      (page/html5
     [:head 
      [:title "Books"]
      (page/include-css "style.css")]
     header-other
      [:body
+      [:div message]
     [:div.login-form
     (form/form-to
       [:post "/signup-complete"]
