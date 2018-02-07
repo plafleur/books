@@ -22,4 +22,9 @@
 (defn create-user! [email password]
    (sql/insert! db-string :users
                  {:username email 
-                  :password (creds/hash-bcrypt password)}))
+                  :password (creds/hash-bcrypt password)
+                  :roles "user"
+                 }))
+(defn user-exists? [email]
+    (not (empty? (sql/query db-string 
+                 ["select username from users where username = (?)" email]))))

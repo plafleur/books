@@ -27,7 +27,7 @@
     (form/label {:class "login-form-username"} "username" "Username:")
     (form/text-field "username")
     [:br]
-    (form/label {:class "login-form-password"} "username" "Password:")
+    (form/label {:class "login-form-password"} "password" "Password:")
     (form/password-field "password")
     [:br][:br]
     (form/submit-button {:class "btn" :name "submit"} "Submit"))]]
@@ -40,4 +40,26 @@
     header-other
     [:body
      "List of books"]
+    ))
+
+(defn signup []
+     (page/html5
+    [:head 
+     [:title "Books"]
+     (page/include-css "style.css")]
+    header-other
+     [:body
+    [:div.login-form
+    (form/form-to
+      [:post "/signup-complete"]
+    (form/label {:class "login-form-username"} "username" "Username:")
+    (form/text-field "username")
+    [:br]
+    (form/label {:class "login-form-password"} "password" "Password:")
+    (form/password-field "password")
+    [:br][:br]
+    (form/label {:class "login-form-password"} "password-reenter" "Re-enter Password:")
+    (form/password-field "password-reenter")
+    [:br][:br]
+    (form/submit-button {:class "btn" :name "submit"} "Submit"))]]
     ))

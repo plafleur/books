@@ -1,6 +1,7 @@
 (ns books.core
     (:require [books.db :as db]
               [books.views :as views]
+              [books.helpers :as helpers]
               [compojure.core :refer [defroutes GET POST ANY]]
               [compojure.handler :as handler]
               [compojure.route :as route]
@@ -14,6 +15,8 @@
   (GET "/bookshelf" request
        (friend/authorize #{::user} (views/bookshelf)))
     (GET "/login" [] (views/home))
+    (GET "/signup" [] (views/signup))
+    (POST "/signup-complete" [username password password-reenter] (helpers/signup-check username password password-reenter)) 
   (route/resources "/")
   (friend/logout (ANY "/logout" request (ring.util.response/redirect "/login")))
   (route/not-found "Not Found")
