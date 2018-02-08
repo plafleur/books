@@ -1,5 +1,5 @@
 (defproject books "0.1.0-SNAPSHOT"
-  :description "Web app for users to track books read"
+  :description "Web app for users to track books read, written in clojure using AWS Cloud9"
   :url "https://github.com/plafleur/books"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
