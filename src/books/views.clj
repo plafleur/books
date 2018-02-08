@@ -53,7 +53,7 @@
       [:div message]
     [:div.login-form
     (form/form-to
-      [:post "/signup-complete"]
+      [:post "/signup"]
     (form/label {:class "login-form-username"} "username" "Username:")
     (form/text-field "username")
     [:br]

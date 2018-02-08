@@ -2,6 +2,7 @@
     (:require [books.db :as db]
               [books.views :as views]
               [books.helpers :as helpers]
+              [clojure.string :as str]
               [compojure.core :refer [defroutes GET POST ANY]]
               [compojure.handler :as handler]
               [compojure.route :as route]
@@ -15,13 +16,12 @@
 (defroutes app-routes
   (GET "/bookshelf" request
        (friend/authorize #{::user} (views/bookshelf)))
-    (GET "/login" [] (views/home))
-    (GET "/login-signup" [] (views/home "User Created"))
+    (GET "/login" request (let [referer (get (:headers request) "referer")]
+                               (if (= referer "https://ae050fbf24e54673a25cbef566fdf468.vfs.cloud9.us-east-1.amazonaws.com/signup")
+                                   (views/home "User created, please log in.")
+                                   (views/home))))
     (GET "/signup" [] (views/signup))
-    (GET "/signup-user-error" [] (views/signup "User already exists, please log in!"))
-    (GET "/signup-password-match" [] (views/signup "Passwords don't match, try again!"))
-    (GET "/signup-password-length" [] (views/signup "Password is too short, must be 10 characters!"))
-    (POST "/signup-complete" [username password password-reenter] (helpers/signup-check username password password-reenter)) 
+    (POST "/signup" [username password password-reenter] (helpers/signup-check username password password-reenter))
   (route/resources "/")
   (friend/logout (ANY "/logout" request (response/redirect "/login")))
   (route/not-found "Not Found")
