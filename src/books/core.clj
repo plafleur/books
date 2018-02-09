@@ -16,7 +16,7 @@
 (defroutes app-routes
   (GET "/bookshelf" request
        (friend/authorize #{::user} (views/bookshelf)))
-    (GET "/login" request (views/home))
+    (GET "/login" request (if (nil? (:login_failed (:params request))) (views/home)(views/home "Email/password incorrect.")))
     (GET "/signup" [] (views/signup))
     (POST "/signup" [username password password-reenter] (helpers/signup-check username password password-reenter))
   (route/resources "/")

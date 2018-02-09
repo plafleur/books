@@ -28,7 +28,7 @@
      (page/include-css "style.css")]
     header-login
     [:body
-    [:div.success message]
+    [:div.error message]
     [:div.login-form
     (form/form-to
       [:post "/login"]
