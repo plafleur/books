@@ -42,6 +42,13 @@ a.text {
     padding-left:8px;
 }
 
+.success {
+    font-family: 'Lato', sans-serif;
+    font-size: 17pt;
+    padding-left:8px;
+    color: #1e74ff;
+}
+
 a.signup{
     font-family: 'Lato', sans-serif;
     color: #ffffff;

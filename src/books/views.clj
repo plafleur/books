@@ -21,16 +21,14 @@
      (page/include-css "style.css")]
     header-login
     [:body
-    [:div message]
+    [:div.success message]
     [:div.login-form
     (form/form-to
       [:post "/login"]
-    (form/label {:class "login-form-username"} "username" "Username:")
-    (form/text-field "username")
+    (form/text-field {:placeholder "Email"} "username")
     [:br]
-    (form/label {:class "login-form-password"} "password" "Password:")
-    (form/password-field "password")
-    [:br][:br]
+    (form/password-field {:placeholder "Password"} "password")
+    [:br]
     (form/submit-button {:class "btn" :name "submit"} "Submit"))]]
     ))
 (defn bookshelf []
