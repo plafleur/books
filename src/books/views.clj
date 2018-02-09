@@ -43,25 +43,26 @@
      "List of books"]
     ))
 
-(defn signup [& message]
+(defn signup [& [message email]]
      (page/html5
     [:head 
      [:title "Books"]
      (page/include-css "style.css")]
     header-other
      [:body
-      [:div message]
+      [:h1.signup-title "Create a new account:"]
+      [:div.error message]
     [:div.login-form
     (form/form-to
       [:post "/signup"]
-    (form/label {:class "login-form-username"} "username" "Username:")
-    (form/text-field "username")
+    ;(form/label {:class "login-form-username"} "username" "Username:")
+    (form/email-field {:placeholder "Email" :value email} "username" )
     [:br]
-    (form/label {:class "login-form-password"} "password" "Password:")
-    (form/password-field "password")
-    [:br][:br]
-    (form/label {:class "login-form-password"} "password-reenter" "Re-enter Password:")
-    (form/password-field "password-reenter")
-    [:br][:br]
+    ;(form/label {:class "login-form-password"} "password" "Password:")
+    (form/password-field {:placeholder "Password"} "password")
+    [:br]
+    ;(form/label {:class "login-form-password"} "password-reenter" "Re-enter Password:")
+    (form/password-field {:placeholder "Password Confirmation"} "password-reenter")
+    [:br]
     (form/submit-button {:class "btn" :name "submit"} "Submit"))]]
     ))
