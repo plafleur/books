@@ -16,10 +16,7 @@
 (defroutes app-routes
   (GET "/bookshelf" request
        (friend/authorize #{::user} (views/bookshelf)))
-    (GET "/login" request (let [referer (get (:headers request) "referer")]
-                               (if (= referer "https://ae050fbf24e54673a25cbef566fdf468.vfs.cloud9.us-east-1.amazonaws.com/signup")
-                                   (views/home "User created, please log in.")
-                                   (views/home))))
+    (GET "/login" request (views/home))
     (GET "/signup" [] (views/signup))
     (POST "/signup" [username password password-reenter] (helpers/signup-check username password password-reenter))
   (route/resources "/")
