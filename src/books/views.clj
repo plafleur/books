@@ -38,15 +38,20 @@
     [:br]
     (form/submit-button {:class "btn" :name "submit"} "Submit"))]]
     ))
-(defn bookshelf []
+(defn bookshelf [& results]
   (page/html5
     [:head 
      [:title "Books"]
      (page/include-css "style.css")]
     header-other
     [:body
-     "List of books"]
-    ))
+     (form/form-to
+         [:post "/bookshelf"]
+         (form/text-field "book-title")
+         [:br]
+         (form/submit-button {:class "btn" :name "submit"} "Submit")
+    results
+    )]))
 
 (defn signup [& [message email success?]]
      (page/html5

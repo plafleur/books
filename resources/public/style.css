@@ -7,6 +7,14 @@ body {
    height:100%;
 }
 
+table {
+    width: 100%;
+}
+
+th, td {
+    text-align: center;
+}
+
 #header {
    background: #1e74ff;
    padding:10px;

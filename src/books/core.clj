@@ -16,6 +16,10 @@
 (defroutes app-routes
   (GET "/bookshelf" request
        (friend/authorize #{::user} (views/bookshelf)))
+   (POST "/bookshelf" [book-title]
+         (friend/authorize #{::user} (views/bookshelf (helpers/book-table book-title))))
+    (GET "/add*" request (friend/authorize #{::user} (helpers/info-for-db (first (vals (:query-params request))) (last (vals (:query-params request))) )))
+    ;(GET "/add*" request (friend/authorize #{::user} (str (:query-params request))))
     (GET "/login" request (if (nil? (:login_failed (:params request))) (views/home)(views/home "Email/password incorrect.")))
     (GET "/signup" [] (views/signup))
     (POST "/signup" [username password password-reenter] (helpers/signup-check username password password-reenter))
