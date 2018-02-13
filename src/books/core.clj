@@ -15,11 +15,10 @@
 
 (defroutes app-routes
   (GET "/bookshelf" request
-       (friend/authorize #{::user} (views/bookshelf)))
+       (friend/authorize #{::user} (views/bookshelf (db/get-bookshelf (get-in request [:session :cemerick.friend/identity :current])))))
    (POST "/bookshelf" [book-title]
          (friend/authorize #{::user} (views/bookshelf (helpers/book-table book-title))))
-    (GET "/add*" request (friend/authorize #{::user} (helpers/info-for-db (first (vals (:query-params request))) (last (vals (:query-params request))) )))
-    ;(GET "/add*" request (friend/authorize #{::user} (str (:query-params request))))
+    (GET "/add*" request (friend/authorize #{::user} (helpers/add-to-bookshelf (first (vals (:query-params request))) (last (vals (:query-params request)))(str (get-in request [:session :cemerick.friend/identity :current]))))) 
     (GET "/login" request (if (nil? (:login_failed (:params request))) (views/home)(views/home "Email/password incorrect.")))
     (GET "/signup" [] (views/signup))
     (POST "/signup" [username password password-reenter] (helpers/signup-check username password password-reenter))

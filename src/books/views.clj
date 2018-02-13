@@ -1,5 +1,6 @@
 (ns books.views
-    (:require [hiccup.page :as page]
+    (:require [books.db :as db]
+              [hiccup.page :as page]
               [hiccup.form :as form]))
           
 (def header-login
@@ -38,7 +39,7 @@
     [:br]
     (form/submit-button {:class "btn" :name "submit"} "Submit"))]]
     ))
-(defn bookshelf [& results]
+(defn add [& results]
   (page/html5
     [:head 
      [:title "Books"]
@@ -46,12 +47,22 @@
     header-other
     [:body
      (form/form-to
-         [:post "/bookshelf"]
+         [:post "/add"]
          (form/text-field "book-title")
          [:br]
          (form/submit-button {:class "btn" :name "submit"} "Submit")
     results
     )]))
+
+(defn bookshelf [& books]
+  (page/html5
+    [:head 
+     [:title "Books"]
+     (page/include-css "style.css")]
+    header-other
+    [:body
+    books
+    ]))
 
 (defn signup [& [message email success?]]
      (page/html5

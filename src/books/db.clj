@@ -18,6 +18,9 @@
             (= (:roles user-info) "user") (assoc user-info :roles #{:books.core/user})
             (= (:roles user-info) "admin") (assoc user-info :roles #{:books.core/admin})
             )))
+(defn get-user-id [req]
+    (sql/query db-string 
+                 ["select id from users where username = (?)" req]))
 
 (defn create-user! [email password]
    (sql/insert! db-string :users
@@ -28,3 +31,18 @@
 (defn user-exists? [email]
     (not (empty? (sql/query db-string 
                  ["select username from users where username = (?)" email]))))
+             
+             
+(defn add-to-bookshelf! [results]
+    (sql/insert! db-string :books
+                 {:uid (:uid results) 
+                  :title (:title results)
+                  :authors (:authors results)
+                  :pagecount (:pageCount results)
+                 }))
+             
+(defn get-bookshelf [username]
+    (let [uid (:id (first (get-user-id username)))]
+         (sql/query db-string 
+                 ["select * from books where uid = (?)" uid])))
+    

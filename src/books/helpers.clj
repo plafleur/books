@@ -22,7 +22,7 @@
 
 
 (defn book-add [results]
-    {:id (get results "id") :info [(select-keys (get results "volumeInfo") ["authors","title","pageCount","publishedDate"])]})
+    (walk/keywordize-keys {:id (get results "id") :info [(select-keys (get results "volumeInfo") ["authors","title","pageCount","publishedDate"])]}))
 
 (defn book-full [results title]
     (merge {"link" (str "<a href=\"/add?id=" (get results "id") "&title=" title "\">Add to bookshelf</a>" )} (select-keys (get results "volumeInfo") ["authors","title","pageCount","publishedDate"])))
@@ -35,7 +35,11 @@
     (map #(assoc % :authors (apply str (interpose ", " (:authors %))))(map #(book-add %)(book-search query))))
 
 (defn info-for-db [id query]
-    (remove nil? (map #(check-id id %) (book-add-final query))))
+    (first (remove nil? (map #(check-id id %) (book-add-final query)))))
+
+
+(defn db-clean [id query]
+    (map #(assoc % :authors (apply str (interpose ", " (:authors %))))(info-for-db id query)))
 
 (defn book-final [query]
     (walk/keywordize-keys (map #(book-full % query)(book-search query))))
@@ -45,3 +49,7 @@
     (table/to-table1d (map #(assoc % :authors (apply str (interpose ", " (:authors %))))(book-final query))[:authors "Author(s)" :title "Title" :publishedDate "Publication Date" :pageCount "Page Count" :link "Link"]))
 
 
+(defn add-to-bookshelf [id title uid]
+                        (do (db/add-to-bookshelf! (assoc (first (db-clean id title)) :uid (:id (first (db/get-user-id uid)))))
+                            (response/redirect "/bookshelf"))
+)
