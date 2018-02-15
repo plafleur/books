@@ -45,4 +45,8 @@
     (let [uid (:id (first (get-user-id username)))]
          (sql/query db-string 
                  ["select * from books where uid = (?)" uid])))
+(defn get-pagecount [username]
+   (let [uid (:id (first (get-user-id username)))]
+         (sql/query db-string 
+                 ["select sum(pagecount) from books where uid = (?)" uid])))
     

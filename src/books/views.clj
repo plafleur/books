@@ -54,13 +54,14 @@
     results
     )]))
 
-(defn bookshelf [& books]
+(defn bookshelf [& [books pagecount]]
   (page/html5
     [:head 
      [:title "Books"]
      (page/include-css "style.css")]
     header-other
     [:body
+    [:h1 (str "You've read " pagecount " pages so far.")]
     books
     ]))
 
