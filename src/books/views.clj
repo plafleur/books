@@ -5,20 +5,20 @@
           
 (def header-login
     (page/html5
-    [:div#header.topnav [:a.text {:href "/"} "Books" ]
+    [:div#header.topnav [:a.text {:href "/login"} "Books" ]
     [:a.signup {:href "/signup"} "Sign Up"]])
 )
 
 (def header-signup
     (page/html5
-    [:div#header.topnav [:a.text {:href "/"} "Books" ]
+    [:div#header.topnav [:a.text {:href "/login"} "Books" ]
     [:a.signup {:href "/login"} "Log In"]])
 )
 
 
 (def header-other
     (page/html5
-    [:div#header.topnav [:a.text {:href "/"} "Books" ]
+    [:div#header.topnav [:a.text {:href "/bookshelf"} "Books" ]
     [:a.logout {:href "/logout"} "Logout"]])
 )
 
