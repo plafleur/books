@@ -81,13 +81,10 @@
     [:div.login-form
     (form/form-to
       [:post "/signup"]
-    ;(form/label {:class "login-form-username"} "username" "Username:")
     (form/email-field {:placeholder "Email" :value email} "username" )
     [:br]
-    ;(form/label {:class "login-form-password"} "password" "Password:")
     (form/password-field {:placeholder "Password"} "password")
     [:br]
-    ;(form/label {:class "login-form-password"} "password-reenter" "Re-enter Password:")
     (form/password-field {:placeholder "Password Confirmation"} "password-reenter")
     [:br]
     (form/submit-button {:class "btn" :name "submit"} "Submit"))]]
