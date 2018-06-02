@@ -39,7 +39,7 @@
     [:br]
     (form/submit-button {:class "btn" :name "submit"} "Submit"))]]
     ))
-(defn add [& results]
+(defn search [& results]
   (page/html5
     [:head 
      [:title "Books"]
@@ -47,7 +47,7 @@
     header-other
     [:body
      (form/form-to
-         [:post "/add"]
+         [:post "/search"]
          (form/text-field "book-title")
          [:br]
          (form/submit-button {:class "btn" :name "submit"} "Submit")
@@ -62,6 +62,8 @@
     header-other
     [:body
     [:h1 (str "You've read " pagecount " pages so far.")]
+    [:br]
+    [:a  {:href "/search"} "Add a book"]
     books
     ]))
 
@@ -79,13 +81,10 @@
     [:div.login-form
     (form/form-to
       [:post "/signup"]
-    ;(form/label {:class "login-form-username"} "username" "Username:")
     (form/email-field {:placeholder "Email" :value email} "username" )
     [:br]
-    ;(form/label {:class "login-form-password"} "password" "Password:")
     (form/password-field {:placeholder "Password"} "password")
     [:br]
-    ;(form/label {:class "login-form-password"} "password-reenter" "Re-enter Password:")
     (form/password-field {:placeholder "Password Confirmation"} "password-reenter")
     [:br]
     (form/submit-button {:class "btn" :name "submit"} "Submit"))]]
