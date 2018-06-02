@@ -21,6 +21,7 @@
     (GET "/search"  request (friend/authorize #{::user}(views/search)))
     (POST "/search" request (friend/authorize #{::user} (views/search (helpers/book-table (get-in request [:form-params "book-title"])))))
     (GET "/add*" request (friend/authorize #{::user} (helpers/add-to-bookshelf (first (vals (:query-params request))) (last (vals (:query-params request)))(str (get-in request [:session :cemerick.friend/identity :current]))))) 
+    (GET "/remove*" request (friend/authorize #{::user}(str (get-in request [:params :bid] )(get-in request [:session :cemerick.friend/identity :current]))))
     (GET "/login" request (if (nil? (:login_failed (:params request))) (views/home)(views/home "Email/password incorrect.")))
     (GET "/signup" [] (views/signup))
     (POST "/signup" [username password password-reenter] (helpers/signup-check username password password-reenter))
