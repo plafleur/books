@@ -52,7 +52,5 @@
 
              
 (defn remove-book! [email bid]
-   (try (sql/delete! db-string :books
-                 ["uid = ? and bid = ?" (:id (first (get-user-id email))) bid])
-             (catch Exception e (.getNextException e))))
-    
+    (sql/delete! db-string :books
+                 ["uid = ? and bid = ?" (:id (first (get-user-id email))) bid]))
