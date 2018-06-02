@@ -39,7 +39,7 @@
     [:br]
     (form/submit-button {:class "btn" :name "submit"} "Submit"))]]
     ))
-(defn add [& results]
+(defn search [& results]
   (page/html5
     [:head 
      [:title "Books"]
@@ -47,7 +47,7 @@
     header-other
     [:body
      (form/form-to
-         [:post "/add"]
+         [:post "/search"]
          (form/text-field "book-title")
          [:br]
          (form/submit-button {:class "btn" :name "submit"} "Submit")
@@ -62,6 +62,8 @@
     header-other
     [:body
     [:h1 (str "You've read " pagecount " pages so far.")]
+    [:br]
+    [:a  {:href "/search"} "Add a book"]
     books
     ]))
 
