@@ -38,7 +38,7 @@
     [:br]
     (form/password-field {:placeholder "Password"} "password")
     [:br]
-    (form/submit-button {:class "btn" :name "submit"} "Submit"))]]
+    (form/submit-button {:id "login-button" :name "submit"} "Submit"))]]
     ))
 (defn search [& results]
   (page/html5
@@ -62,9 +62,11 @@
      (page/include-css "style.css")]
     header-other
     [:body
-    [:h1 (str "You've read " (if (nil? pagecount) "0" pagecount) " pages so far.")]
+    [:h1 {:id "pagecount"} (str "You've read " (if (nil? pagecount) "0" pagecount) " pages so far.")]
     [:br]
-    [:a  {:href "/search"} "Add a book"]
+    [:a {:href "/search"} 
+    [:button {:id "add-button"} "Add a book"]]
+    [:br]
     books
     ]))
 

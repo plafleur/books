@@ -92,9 +92,14 @@ a.logout{
 form {
     padding: 10px;
 }
+.signup-title{
+    font-family: 'Lato', sans-serif;
+    font-size: 22px;
+    color: #000000;
+    padding:10px;
+}
 
-input,
-input::-webkit-input-placeholder {
+#username {
     font-family: 'Lato', sans-serif;
     font-size: 15px;
     line-height: 3;
@@ -103,9 +108,38 @@ input::-webkit-input-placeholder {
     width:300px;
 }
 
-.signup-title{
+#password {
     font-family: 'Lato', sans-serif;
-    font-size: 22px;
-    color: #000000;
-    padding:10px;
+    font-size: 15px;
+    line-height: 3;
+    margin-bottom: 10px;
+    padding:4px;
+    width:300px;
+}
+
+#login-button {
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    line-height: 3;
+    margin-bottom: 10px;
+    padding:4px;
+    width:150px;
+}
+
+#add-button {
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    line-height: 3;
+    margin-bottom: 10px;
+    width:150px;
+    position: relative;
+    left:4%;
+
+}
+
+#pagecount {
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    text-align: center;
+
 }
