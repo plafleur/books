@@ -51,7 +51,5 @@
                  ["select sum(pagecount) from books where uid = (?)" uid])))
              
 (defn remove-book! [email bid]
-   ;(try (sql/delete! db-string :books
     (sql/delete! db-string :books
         ["uid = ? and bid = ?" (:id (first (get-user-id email))) (Integer/parseInt bid)]))
-             ;(catch Exception e (.getNextException e))))
