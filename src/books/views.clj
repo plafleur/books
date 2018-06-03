@@ -1,7 +1,8 @@
 (ns books.views
     (:require [books.db :as db]
               [hiccup.page :as page]
-              [hiccup.form :as form]))
+              [hiccup.form :as form]
+              [clojure.string :as string]))
           
 (def header-login
     (page/html5
@@ -61,7 +62,7 @@
      (page/include-css "style.css")]
     header-other
     [:body
-    [:h1 (str "You've read " pagecount " pages so far.")]
+    [:h1 (str "You've read " (if (nil? pagecount) "0" pagecount) " pages so far.")]
     [:br]
     [:a  {:href "/search"} "Add a book"]
     books

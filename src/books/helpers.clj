@@ -58,3 +58,7 @@
     (map #(assoc % :bid (str "<a href=\"/remove?bid="(:bid %)"\">Remove from bookshelf</a>")) results))
 (defn bookshelf-view [results]
     (table/to-table1d (add-links-to-results results) [:authors "Author(s)" :title "Title" :pagecount "Page Count" :created_at "Date Added" :bid "Remove?"]))
+
+(defn remove-from-bookshelf [email bid]
+    (do (db/remove-book! email bid)
+        (response/redirect "/bookshelf")))
