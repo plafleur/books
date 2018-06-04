@@ -55,22 +55,34 @@
     results
     )]))
 
-(defn bookshelf [& [books pagecount]]
+(defn bookshelf [& [books pagecount date]]
   (page/html5
     [:head 
      [:title "Books"]
      (page/include-css "style.css")]
     header-other
     [:body
-    [:h1 {:id "pagecount"} (str "You've read " (if (nil? pagecount) "0" pagecount) " pages so far.")]
-    [:br]
-    [:a {:href "/search"} 
+     [:a {:href "/search"} 
     [:button {:id "add-button"} "Add a book"]]
+    [:br]
+    [:h1 {:id "pagecount"} (str "You've read " (if (nil? pagecount) "0" pagecount) " pages so far. You last addded a book " date ".")]
     [:br]
     (if (empty? books)
         [:h2 "You need to add a book to your bookshelf!"]
         books
     )
+    ]))
+
+(defn bookshelf-empty []
+  (page/html5
+    [:head 
+     [:title "Books"]
+     (page/include-css "style.css")]
+    header-other
+    [:body
+    [:a {:href "/search"} 
+    [:button {:id "add-button"} "Add a book"]]
+    [:h2 {:id "no-books"} "You need to add a book to your bookshelf!"]
     ]))
 
 (defn signup [& [message email success?]]

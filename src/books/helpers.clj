@@ -62,3 +62,16 @@
 (defn remove-from-bookshelf [email bid]
     (do (db/remove-book! email bid)
         (response/redirect "/bookshelf")))
+(defn date-splitter [date]
+    (clojure.string/split date #"-"))
+
+(def months 
+    (hash-map :01 "January" :02 "February" :03 "March" :04 "April" :05 "May" :06 "June" :07 "July" 
+              :08 "August" :09 "September" :10 "October" :11 "November" :12 "December"))
+
+(defn date-formatter [col]
+    (let [year (first col)
+          month (get col 1)
+          day (get col 2)]
+     (str (get months (keyword month)) " " (str day) ", " year)
+      ))

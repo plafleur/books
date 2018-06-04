@@ -17,8 +17,11 @@
   (GET "/bookshelf" request
        (friend/authorize #{::user}
                          (if (empty? (db/get-bookshelf (get-in request [:session :cemerick.friend/identity :current])))
-                             (views/bookshelf () (:sum (first (db/get-pagecount (get-in request [:session :cemerick.friend/identity :current])))))
-                              (views/bookshelf (helpers/bookshelf-view (db/get-bookshelf (get-in request [:session :cemerick.friend/identity :current]))) (:sum (first (db/get-pagecount (get-in request [:session :cemerick.friend/identity :current]))))))))
+                             (views/bookshelf-empty)
+                              (views/bookshelf (helpers/bookshelf-view (db/get-bookshelf (get-in request [:session :cemerick.friend/identity :current])))
+                                               (:sum (first (db/get-pagecount (get-in request [:session :cemerick.friend/identity :current]))))
+                                               (helpers/date-formatter (helpers/date-splitter (str (:created_at (first (db/get-most-recent-add (get-in request [:session :cemerick.friend/identity :current])))))))
+                                               ))))
    (POST "/bookshelf" request
          (friend/authorize #{::user} (str request)))
     (GET "/search"  request (friend/authorize #{::user}(views/search)))

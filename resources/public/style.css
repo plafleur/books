@@ -133,7 +133,7 @@ form {
     margin-bottom: 10px;
     width:150px;
     position: relative;
-    left:4%;
+    left:6px;
 
 }
 
@@ -142,4 +142,10 @@ form {
     font-size: 15px;
     text-align: center;
 
+}
+
+#no-books {
+    font-family: 'Lato', sans-serif;
+    font-size: 12px;
+    text-align: center;
 }
