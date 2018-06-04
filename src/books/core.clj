@@ -15,7 +15,10 @@
 
 (defroutes app-routes
   (GET "/bookshelf" request
-       (friend/authorize #{::user} (views/bookshelf (helpers/bookshelf-view (db/get-bookshelf (get-in request [:session :cemerick.friend/identity :current]))) (:sum (first (db/get-pagecount (get-in request [:session :cemerick.friend/identity :current])))))))
+       (friend/authorize #{::user}
+                         (if (empty? (db/get-bookshelf (get-in request [:session :cemerick.friend/identity :current])))
+                             (views/bookshelf () (:sum (first (db/get-pagecount (get-in request [:session :cemerick.friend/identity :current])))))
+                              (views/bookshelf (helpers/bookshelf-view (db/get-bookshelf (get-in request [:session :cemerick.friend/identity :current]))) (:sum (first (db/get-pagecount (get-in request [:session :cemerick.friend/identity :current]))))))))
    (POST "/bookshelf" request
          (friend/authorize #{::user} (str request)))
     (GET "/search"  request (friend/authorize #{::user}(views/search)))

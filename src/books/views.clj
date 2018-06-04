@@ -67,7 +67,10 @@
     [:a {:href "/search"} 
     [:button {:id "add-button"} "Add a book"]]
     [:br]
-    books
+    (if (empty? books)
+        [:h2 "You need to add a book to your bookshelf!"]
+        books
+    )
     ]))
 
 (defn signup [& [message email success?]]
