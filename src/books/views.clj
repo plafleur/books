@@ -31,14 +31,14 @@
     header-login
     [:body
     [:div.error message]
-    [:div.login-form
+    [:div {:id "login-form"}
     (form/form-to
       [:post "/login"]
     (form/text-field {:placeholder "Email"} "username")
     [:br]
     (form/password-field {:placeholder "Password"} "password")
     [:br]
-    (form/submit-button {:id "login-button" :name "submit"} "Submit"))]]
+    (form/submit-button {:id "login-button" :name "submit"} "Log In"))]]
     ))
 (defn search [& results]
   (page/html5
@@ -49,9 +49,9 @@
     [:body
      (form/form-to
          [:post "/search"]
-         (form/text-field "book-title")
+         (form/text-field {:placeholder "Book Title"} "book-title")
          [:br]
-         (form/submit-button {:class "btn" :name "submit"} "Submit")
+         (form/submit-button {:id "search-button" :class "btn" :name "submit"} "Submit")
     results
     )]))
 
@@ -62,6 +62,7 @@
      (page/include-css "style.css")]
     header-other
     [:body
+     [:h1 {:id "Bookshelf"} "Bookshelf"]
      [:a {:href "/search"} 
     [:button {:id "add-button"} "Add a book"]]
     [:br]
