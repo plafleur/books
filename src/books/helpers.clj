@@ -8,6 +8,9 @@
               [cheshire.core :as json]
               [clj-http.client :as client]))
           
+          
+(def attr-fns {:data-tr-attrs {:id "table-rows"}} )
+    
 (defn signup-check [email pwd pwd-re]
     (cond
         (empty? email) (views/signup "Email can't be blank.")
@@ -55,9 +58,9 @@
 )
 
 (defn add-links-to-results [results]
-    (map #(assoc % :bid (str "<a href=\"/remove?bid="(:bid %)"\">Remove from bookshelf</a>")) results))
+    (map #(assoc % :bid (str "<a href=\"/remove?bid="(:bid %)"\"><button id=\"book-button\"> Remove from bookshelf</button></a>")) results))
 (defn bookshelf-view [results]
-    (table/to-table1d (add-links-to-results results) [:authors "Author(s)" :title "Title" :pagecount "Page Count" :created_at "Date Added" :bid "Remove?"]))
+    (table/to-table1d (add-links-to-results results) [:authors "Author(s)" :title "Title" :pagecount "Page Count" :created_at "Date Added" :bid ""] attr-fns))
 
 (defn remove-from-bookshelf [email bid]
     (do (db/remove-book! email bid)
