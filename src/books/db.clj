@@ -53,6 +53,7 @@
 (defn remove-book! [email bid]
     (sql/delete! db-string :books
         ["uid = ? and bid = ?" (:id (first (get-user-id email))) (Integer/parseInt bid)]))
+    
 (defn get-most-recent-add [username]
      (let [uid (:id (first (get-user-id username)))]
          (sql/query db-string 
