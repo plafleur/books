@@ -49,7 +49,7 @@
     [:body
      (form/form-to
          [:post "/search"]
-         (form/text-field {:placeholder "Book Title"} "book-title")
+         (form/text-field {:placeholder "Search term"} "book-title")
          [:br]
          (form/submit-button {:id "search-button" :class "btn" :name "submit"} "Submit")
     results

@@ -49,7 +49,7 @@
 
 
 (defn book-table [query]
-    (table/to-table1d (map #(assoc % :authors (apply str (interpose ", " (:authors %))))(book-final query))[:authors "Author(s)" :title "Title" :publishedDate "Publication Date" :pageCount "Page Count" :link "Link"]))
+    (table/to-table1d (map #(assoc % :authors (apply str (interpose ", " (:authors %))))(book-final query))[:authors "Author(s)" :title "Title" :publishedDate "Publication Date" :pageCount "Page Count" :link "Link"] attr-fns))
 
 
 (defn add-to-bookshelf [id title uid]
@@ -59,12 +59,14 @@
 
 (defn add-links-to-results [results]
     (map #(assoc % :bid (str "<a href=\"/remove?bid="(:bid %)"\"><button id=\"book-button\"> Remove from bookshelf</button></a>")) results))
+
 (defn bookshelf-view [results]
     (table/to-table1d (add-links-to-results results) [:authors "Author(s)" :title "Title" :pagecount "Page Count" :created_at "Date Added" :bid ""] attr-fns))
 
 (defn remove-from-bookshelf [email bid]
     (do (db/remove-book! email bid)
         (response/redirect "/bookshelf")))
+    
 (defn date-splitter [date]
     (clojure.string/split date #"-"))
 
