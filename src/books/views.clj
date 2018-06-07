@@ -40,16 +40,17 @@
     [:br]
     (form/submit-button {:id "login-button" :name "submit"} "Log In"))]]
     ))
-(defn search [& results]
+(defn search [& [message search-term results]]
   (page/html5
     [:head 
      [:title "Books"]
      (page/include-css "style.css")]
     header-other
     [:body
+    [:a {:id "warning-message"} message] 
      (form/form-to
          [:post "/search"]
-         (form/text-field {:placeholder "Search term"} "book-title")
+         (form/text-field {:placeholder "Search term" :value search-term} "book-title")
          [:br]
          (form/submit-button {:id "search-button" :class "btn" :name "submit"} "Submit")
     results

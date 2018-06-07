@@ -25,7 +25,11 @@
    (POST "/bookshelf" request
          (friend/authorize #{::user} (str request)))
     (GET "/search"  request (friend/authorize #{::user}(views/search)))
-    (POST "/search" request (friend/authorize #{::user} (views/search (helpers/book-table (get-in request [:form-params "book-title"])))))
+    (POST "/search" request (friend/authorize #{::user} 
+                                              (if (empty? (get-in request [:form-params "book-title"]))
+                                                  (views/search "You need to enter a search term!")
+                                                  (views/search "" (get-in request [:form-params "book-title"]) (helpers/book-table (get-in request [:form-params "book-title"]))))))
+    
     (GET "/add*" request (friend/authorize #{::user} (helpers/add-to-bookshelf (first (vals (:query-params request))) (last (vals (:query-params request)))(str (get-in request [:session :cemerick.friend/identity :current]))))) 
     (GET "/remove*" request (friend/authorize #{::user}(helpers/remove-from-bookshelf (get-in request [:session :cemerick.friend/identity :current])(get-in request [:params :bid]))))
     (GET "/login" request (if (nil? (:login_failed (:params request))) (views/home)(views/home "Email/password incorrect.")))

@@ -178,7 +178,7 @@ form {
     margin-bottom: 10px;
     width:130px;
     position: relative;
-    left:6px;
+    left:-1px;
     background-color: #1e74ff;
 }
 
@@ -192,4 +192,11 @@ form {
     font-size: 15px;
     background-color: #1e74ff;
     margin-bottom: 2px;
+}
+
+#warning-message {
+    font-family: 'Lato', sans-serif;
+    color: #ff0010;
+    font-size: 17pt;
+    padding-left:8px;
 }
