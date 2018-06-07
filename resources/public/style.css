@@ -55,6 +55,7 @@ a.text {
     color: #ff0010;
     font-size: 17pt;
     padding-left:8px;
+    text-align: center;
 }
 
 .success {

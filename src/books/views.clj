@@ -23,7 +23,7 @@
     [:a.logout {:href "/logout"} "Logout"]])
 )
 
-(defn home [& message]
+(defn home [& [email message]]
   (page/html5
     [:head 
      [:title "Books"]
@@ -34,7 +34,7 @@
     [:div {:id "login-form"}
     (form/form-to
       [:post "/login"]
-    (form/text-field {:placeholder "Email"} "username")
+    (form/email-field {:placeholder "Email" :value email} "username")
     [:br]
     (form/password-field {:placeholder "Password"} "password")
     [:br]
