@@ -109,3 +109,12 @@
     [:br]
     (form/submit-button {:class "btn" :name "submit"} "Submit"))]]
     ))
+
+(defn account []
+    (page/html5
+        [:head 
+         [:title "Books"]
+         (page/include-css "style.css")]
+     header-other
+         
+))
