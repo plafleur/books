@@ -121,3 +121,14 @@
           [:a {:href "/account/reset-password"} 
     [:button {:id "password-reset-button"} "Reset your password"]]]
 ))
+
+(defn pwd-reset []
+    (page/html5
+        [:head 
+         [:title "Books"]
+         (page/include-css "style.css")]
+     header-other
+         [:body 
+          [:a {:href "/account/reset-password"} 
+    [:button {:id "password-reset-button"} "Reset your password"]]]
+))

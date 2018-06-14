@@ -21,6 +21,10 @@
 (defn get-user-id [req]
     (sql/query db-string 
                  ["select id from users where username = (?)" req]))
+             
+(defn get-password [req]
+    (:password (first (sql/query db-string 
+               ["select password from users where username = (?)" req]))))
 
 (defn create-user! [email password]
    (sql/insert! db-string :users

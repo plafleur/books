@@ -6,7 +6,8 @@
               [hiccup.table :as table]
               [ring.util.response :as response]
               [cheshire.core :as json]
-              [clj-http.client :as client]))
+              [clj-http.client :as client]
+              (cemerick.friend [credentials :as creds])))
           
           
 (def attr-fns {:data-tr-attrs {:id "table-rows"}} )
@@ -18,6 +19,14 @@
         (not= pwd pwd-re) (views/signup "Entered passwords don't match, please try again." email)
         (< (count pwd) 10) (views/signup "Password is too short, it must be at least 10 characters." email)
         :else (do (db/create-user! email pwd) (views/signup "User created, please log in." nil "yes"))
+    ))
+
+(defn password-reset-check [email cpwd npwd npwd-re]
+    (cond
+        (empty? cpwd) (println "No password");(views/pwd-reset "Enter your current password")
+        (not= npwd npwd-re) (println "Passwords don't match") ;(views/pwd-reset "Entered passwords don't match, please try again." email)
+        (< (count npwd) 10) (println "New password is too short");(views/pwd-reset "Password is too short, it must be at least 10 characters." email)
+        (not (creds/bcrypt-verify cpwd (db/get-password email))) (println "Current password is wrong")
     ))
 
 (defn book-search [query]
