@@ -35,6 +35,7 @@
     (GET "/login" request (if (nil? (:login_failed (:params request))) (views/home)(views/home (get-in request [:params :username]) "You've entered and incorrect email and password combination.")))
     (GET "/signup" [] (views/signup))
     (POST "/signup" [username password password-reenter] (helpers/signup-check username password password-reenter))
+    (GET "/account" [] (views/account)) 
   (route/resources "/")
   (friend/logout (ANY "/logout" request (response/redirect "/login")))
   (route/not-found "Not Found")

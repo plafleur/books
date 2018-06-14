@@ -20,7 +20,8 @@
 (def header-other
     (page/html5
     [:div#header.topnav [:a.text {:href "/bookshelf"} "Books" ]
-    [:a.logout {:href "/logout"} "Logout"]])
+     [:a.logout {:href "/logout"} "Logout"]
+     [:a.account {:href "/account"} "Account"]])
 )
 
 (defn home [& [email message]]
@@ -116,5 +117,7 @@
          [:title "Books"]
          (page/include-css "style.css")]
      header-other
-         
+         [:body 
+          [:a {:href "/account/reset-password"} 
+    [:button {:id "password-reset-button"} "Reset your password"]]]
 ))
