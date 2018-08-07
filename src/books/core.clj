@@ -37,7 +37,7 @@
     (POST "/signup" [username password password-reenter] (helpers/signup-check username password password-reenter))
     (GET "/account" [] (views/account))
     (GET "/account/reset-password" [] (views/pwd-reset))
-    (POST "/account/reset-password" request (str request))
+    (POST "/account/reset-password" request (helpers/password-reset-check (get-in request [:session :cemerick.friend/identity :current]) (get-in request [:params :old-password])(get-in request [:params :new-password])(get-in request [:params :new-password-reenter])))
   (route/resources "/")
   (friend/logout (ANY "/logout" request (response/redirect "/login")))
   (route/not-found "Not Found")

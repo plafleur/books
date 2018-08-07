@@ -122,13 +122,16 @@
     [:button {:id "password-reset-button"} "Reset your password"]]]
 ))
 
-(defn pwd-reset []
+(defn pwd-reset [& [message success?]]
     (page/html5
         [:head 
          [:title "Books"]
          (page/include-css "/style.css")]
      header-other
          [:body
+          (if (nil? success?)
+      [:div.error message]
+      [:div.success message])
     [:div.pwd-form
     (form/form-to
         [:post "/account/reset-password"]

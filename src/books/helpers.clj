@@ -23,10 +23,10 @@
 
 (defn password-reset-check [email cpwd npwd npwd-re]
     (cond
-        (empty? cpwd) (println "No password");(views/pwd-reset "Enter your current password")
-        (not= npwd npwd-re) (println "Passwords don't match") ;(views/pwd-reset "Entered passwords don't match, please try again." email)
-        (< (count npwd) 10) (println "New password is too short");(views/pwd-reset "Password is too short, it must be at least 10 characters." email)
-        (not (creds/bcrypt-verify cpwd (db/get-password email))) (println "Current password is wrong")
+        (empty? cpwd) (views/pwd-reset "Enter your current password")
+        (not= npwd npwd-re) (views/pwd-reset "Entered passwords don't match, please try again.")
+        (< (count npwd) 10) (views/pwd-reset "Password is too short, it must be at least 10 characters.")
+        (not (creds/bcrypt-verify cpwd (db/get-password email))) (views/pwd-reset "Current password is wrong")
     ))
 
 (defn book-search [query]
@@ -89,3 +89,5 @@
           day (get col 2)]
      (str (get months (keyword month)) " " (str day) ", " year)
       ))
+  
+ (def select-values (comp vals select-keys))
