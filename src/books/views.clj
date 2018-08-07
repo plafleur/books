@@ -126,9 +126,18 @@
     (page/html5
         [:head 
          [:title "Books"]
-         (page/include-css "style.css")]
+         (page/include-css "/style.css")]
      header-other
-         [:body 
-          [:a {:href "/account/reset-password"} 
-    [:button {:id "password-reset-button"} "Reset your password"]]]
+         [:body
+    [:div.pwd-form
+    (form/form-to
+        [:post "/account/reset-password"]
+    (form/password-field {:placeholder "Old Password"} "old-password")
+    [:br]
+    (form/password-field {:placeholder "New Password"} "new-password")
+    [:br]
+    (form/password-field {:placeholder "New Password Confirmation"} "new-password-reenter")
+    [:br]
+    (form/submit-button {:class "btn" :name "submit"} "Submit"))
+          ]]
 ))
