@@ -20,8 +20,10 @@
 (def header-other
     (page/html5
     [:div#header.topnav [:a.text {:href "/bookshelf"} "Books" ]
-     [:a.logout {:href "/logout"} "Logout"]
-     [:a.account {:href "/account"} "Account"]])
+     [:a.header-label {:href "/logout"} "Logout"]
+     [:a.header-label {:href "/account"} "My Account"]
+     [:a.header-label {:href "/bookshelf"} "My Bookshelf"]
+     ])
 )
 
 (defn home [& [email message]]
