@@ -62,3 +62,6 @@
      (let [uid (:id (first (get-user-id username)))]
          (sql/query db-string 
                  ["select created_at from books where uid = (?) order by created_at DESC limit 1;" uid])))
+             
+(defn update-password! [email newpw]
+    (sql/update! db-string :users {:password (creds/hash-bcrypt newpw)}["username = ?" email]))

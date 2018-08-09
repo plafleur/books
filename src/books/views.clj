@@ -118,8 +118,9 @@
          (page/include-css "style.css")]
      header-other
          [:body 
+          [:div {:id "account-page"}
           [:a {:href "/account/reset-password"} 
-    [:button {:id "password-reset-button"} "Reset your password"]]]
+    [:button {:id "standard-button"} "Reset your password"]]]]
 ))
 
 (defn pwd-reset [& [message success?]]
@@ -132,15 +133,15 @@
           (if (nil? success?)
       [:div.error message]
       [:div.success message])
-    [:div.pwd-form
+    [:div#pwd-form
     (form/form-to
         [:post "/account/reset-password"]
-    (form/password-field {:placeholder "Old Password"} "old-password")
+    (form/password-field {:placeholder "Current Password"} "old-password")
     [:br]
     (form/password-field {:placeholder "New Password"} "new-password")
     [:br]
-    (form/password-field {:placeholder "New Password Confirmation"} "new-password-reenter")
+    (form/password-field {:placeholder "Reenter New Password"} "new-password-reenter")
     [:br]
-    (form/submit-button {:class "btn" :name "submit"} "Submit"))
+    (form/submit-button {:id "standard-button" :name "submit"} "Submit"))
           ]]
 ))

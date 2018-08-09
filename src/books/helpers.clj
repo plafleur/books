@@ -23,10 +23,11 @@
 
 (defn password-reset-check [email cpwd npwd npwd-re]
     (cond
-        (empty? cpwd) (views/pwd-reset "Enter your current password")
-        (not= npwd npwd-re) (views/pwd-reset "Entered passwords don't match, please try again.")
-        (< (count npwd) 10) (views/pwd-reset "Password is too short, it must be at least 10 characters.")
+        (empty? cpwd) (views/pwd-reset "Current password is empty.")
+        (not= npwd npwd-re) (views/pwd-reset "New passwords don't match, please try again.")
+        (< (count npwd) 10) (views/pwd-reset "New password is too short, it must be at least 10 characters.")
         (not (creds/bcrypt-verify cpwd (db/get-password email))) (views/pwd-reset "Current password is wrong")
+        :else (do (db/update-password! email npwd) (views/pwd-reset "Password updated!"))
     ))
 
 (defn book-search [query]
