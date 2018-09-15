@@ -122,7 +122,7 @@
          [:body 
           [:div {:id "account-page"}
           [:a {:href "/account/reset-password"} 
-    [:button {:id "standard-button"} "Reset your password"]]]]
+    [:button {:id "standard-button"} "Reset my password."]]]]
 ))
 
 (defn pwd-reset [& [message success?]]
