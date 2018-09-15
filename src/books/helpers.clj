@@ -27,7 +27,7 @@
         (not= npwd npwd-re) (views/pwd-reset "New passwords don't match, please try again.")
         (< (count npwd) 10) (views/pwd-reset "New password is too short, it must be at least 10 characters.")
         (not (creds/bcrypt-verify cpwd (db/get-password email))) (views/pwd-reset "Current password is wrong")
-        :else (do (db/update-password! email npwd) (views/pwd-reset "Password updated!"))
+        :else (do (db/update-password! email npwd) (views/pwd-reset "Password updated!" "yes"))
     ))
 
 (defn book-search [query]
