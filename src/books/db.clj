@@ -65,3 +65,6 @@
              
 (defn update-password! [email newpw]
     (sql/update! db-string :users {:password (creds/hash-bcrypt newpw)}["username = ?" email]))
+
+(defn get-newest-book []
+    (sql/query db-string ["select title, authors from books order by created_at DESC limit 1;"]))

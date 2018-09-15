@@ -92,3 +92,10 @@
       ))
   
  (def select-values (comp vals select-keys))
+ 
+ (defn most-recent []
+     (let [book (db/get-newest-book)
+           author (:authors (first book))
+           title (:title (first book))]
+       (str title " by " author)
+           ))
