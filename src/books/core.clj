@@ -32,7 +32,7 @@
     
     (GET "/add*" request (friend/authorize #{::user} (helpers/add-to-bookshelf (first (vals (:query-params request))) (last (vals (:query-params request)))(str (get-in request [:session :cemerick.friend/identity :current]))))) 
     (GET "/remove*" request (friend/authorize #{::user}(helpers/remove-from-bookshelf (get-in request [:session :cemerick.friend/identity :current])(get-in request [:params :bid]))))
-    (GET "/login" request (if (nil? (:login_failed (:params request))) (views/home)(views/home (get-in request [:params :username]) "You've entered an incorrect email and password combination.")))
+    (GET "/login" request (if (nil? (:login_failed (:params request))) (views/home nil nil (helpers/most-recent)(helpers/total-user-count) (helpers/total-book-count) (helpers/total-page-count))(views/home (get-in request [:params :username]) "You've entered an incorrect email and password combination." (helpers/most-recent) (helpers/total-user-count)(helpers/total-book-count) (helpers/total-page-count))))
     (GET "/signup" [] (views/signup))
     (POST "/signup" [username password password-reenter] (helpers/signup-check username password password-reenter))
     (GET "/account" [] (friend/authorize #{::user} (views/account)))

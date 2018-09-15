@@ -94,8 +94,17 @@
  (def select-values (comp vals select-keys))
  
  (defn most-recent []
-     (let [book (db/get-newest-book)
-           author (:authors (first book))
-           title (:title (first book))]
-       (str title " by " author)
-           ))
+     (let [book (first (db/get-newest-book))
+           author (:authors book)
+           title (:title book)]
+       (str title " by " author "."))
+           )
+       
+(defn total-book-count []
+    (:count (first (db/get-total-book-count))))
+
+(defn total-page-count []
+    (:sum (first (db/get-total-page-count))))
+
+(defn total-user-count []
+    (:count (first (db/get-total-user-count))))

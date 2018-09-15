@@ -26,7 +26,7 @@
      ])
 )
 
-(defn home [& [email message]]
+(defn home [& [email message book total-users total-book-count total-page-count]]
   (page/html5
     [:head 
      [:title "Books"]
@@ -41,7 +41,17 @@
     [:br]
     (form/password-field {:placeholder "Password"} "password")
     [:br]
-    (form/submit-button {:id "login-button" :name "submit"} "Log In"))]]
+    (form/submit-button {:id "login-button" :name "submit"} "Log In"))]
+    [:br]
+    [:br]
+    [:br]
+    [:br]
+    [:div {:id "most-recent"}  
+     [:a "The most recently added book is: " book]
+     [:br]
+     [:a (str "There are " total-users " users, who have added " total-book-count " books for a grand total of " total-page-count " pages!")]
+     ]
+]
     ))
 (defn search [& [message search-term results]]
   (page/html5

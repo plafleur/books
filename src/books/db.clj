@@ -67,4 +67,12 @@
     (sql/update! db-string :users {:password (creds/hash-bcrypt newpw)}["username = ?" email]))
 
 (defn get-newest-book []
-    (sql/query db-string ["select title, authors from books order by created_at DESC limit 1;"]))
+    (sql/query db-string ["select title, authors from books order by bid DESC limit 1;"]))
+
+(defn get-total-page-count []
+    (sql/query db-string ["select sum(pagecount) from books;"]))
+
+(defn get-total-book-count []
+    (sql/query db-string ["select count(*) from books;"]))
+(defn get-total-user-count []
+    (sql/query db-string ["select count(*) from users;"]))
